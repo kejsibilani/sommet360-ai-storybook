@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sommet360 AI · Sprint 1 Storybook</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--ink:#1A1A1A;--muted:#6B7281;--line:#E8E9EC;--panel:#F6F8FA;--blue:#0F64D5;--blue-soft:#E6F0FF;--ai:#5B3FD6;--bg:#FFFFFF}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:14px}
+.layout{display:flex;min-height:100vh}
+aside{flex:0 0 300px;background:var(--panel);border-right:1px solid var(--line);padding:20px 16px;display:flex;flex-direction:column;gap:18px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px}
+.brand b{font-size:15px;font-weight:600}
+.brand span{display:block;font-size:12px;color:var(--muted)}
+.group{margin-bottom:14px}
+.group h2{margin:0 0 6px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.group a{display:block;padding:8px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:13.5px}
+.group a:hover{background:#ECEFF3}
+.group a[aria-current="page"]{background:var(--blue-soft);color:var(--blue);font-weight:500}
+main{flex:1;min-width:0;display:flex;flex-direction:column}
+.head{padding:18px 24px 14px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:space-between}
+.head h1{margin:0 0 4px;font-size:20px;font-weight:600}
+.head p{margin:0;color:var(--muted);max-width:760px;line-height:1.5}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{font-size:12px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:#333}
+.open{background:var(--blue);color:#fff;text-decoration:none;border-radius:6px;padding:8px 14px;font-weight:500;white-space:nowrap}
+.frame{flex:1;padding:16px 24px 24px;background:#EEF0F3}
+iframe{width:100%;height:calc(100vh - 150px);min-height:640px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.note{font-size:12px;color:var(--muted);line-height:1.5}
+.ai{color:var(--ai);font-weight:600}
+@media (max-width: 860px){.layout{flex-direction:column}aside{position:static;height:auto;flex:none;border-right:0;border-bottom:1px solid var(--line)}iframe{height:80vh}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside aria-label="Stories">
+    <div class="brand">
+      <svg width="34" height="28" viewBox="0 0 34 28" fill="none" stroke="#1A1A1A" stroke-width="1.5" aria-hidden="true"><path d="M1 26 L11 8 L17 18 L23 6 L33 26"/><path d="M7 26 L14 14 L20 26"/></svg>
+      <div><b>Sommet360 AI</b><span>Sprint 1 mock-ups</span></div>
+    </div>
+    <nav id="nav"></nav>
+    <p class="note">Screens copy the current Sommet360 UI. New AI elements carry a purple <span class="ai">✦</span>. All names and amounts are demo data.</p>
+  </aside>
+  <main>
+    <div class="head">
+      <div>
+        <h1 id="title"></h1>
+        <p id="desc"></p>
+        <div class="chips" id="chips"></div>
+      </div>
+      <a class="open" id="open" target="_blank" rel="noopener">Open full page ↗</a>
+    </div>
+    <div class="frame"><iframe id="view" title="Story preview"></iframe></div>
+  </main>
+</div>
+<script>
+const STORIES = [
+  { group: 'AI-01 · Expense Capture & Audit', items: [
+    { id: 'ai-01-expense-report', name: 'Business purpose document', file: 'ai-01-expense-report.html',
+      desc: 'Upload the business purpose document: AI shows a processing state, then fills Description and Business purpose. Both stay editable.',
+      tags: ['Processing state', 'Populated fields', 'Click the + to start'] },
+    { id: 'ai-01-receipt', name: 'Receipt details & checks', file: 'ai-01-receipt.html',
+      desc: 'AI fills Date, Type, Description, Country, Amount and Currency next to the receipt preview. Exchange rate and converted amount use existing logic.',
+      tags: ['Uncertain Type to confirm', 'Possible duplicate', 'Receipt preview'] }
+  ]},
+  { group: 'AI-02 · Timesheet & Attendance Control', items: [
+    { id: 'ai-02-timesheet', name: 'Timesheet review', file: 'ai-02-timesheet.html',
+      desc: 'The existing Timesheet calendar with an AI check panel and flags for missing clock-out, overlap, hours over the limit and work on leave. Click a flagged day for the explanation and suggested action.',
+      tags: ['Missing records', 'Overlaps', 'Overtime', 'Leave conflicts'] },
+    { id: 'ai-02-team-overview', name: 'HR/Payroll overview', file: 'ai-02-team-overview.html',
+      desc: 'My team presence and leaves with an AI pre-payroll panel and an "AI issues before payroll" column linking to affected records.',
+      tags: ['Unresolved issues', 'Checks not completed', 'Links to records'] }
+  ]},
+  { group: 'AI-24 · One Knowledge Engine', items: [
+    { id: 'ai-24-assistant', name: 'Assistant', file: 'ai-24-assistant.html',
+      desc: 'Assistant on the home page. Use the suggestion chips to see a how-to answer with Open relevant screen, a policy answer with cited clause and version, and a case with no reliable answer.',
+      tags: ['How-to + screen link', 'Policy with source', 'No reliable answer'] }
+  ]},
+  { group: 'AI-03 · Payroll Double-Check & Risk Report', items: [
+    { id: 'ai-03-payroll-checks', name: 'Payroll run checks', file: 'ai-03-payroll-checks.html',
+      desc: 'Payroll runs with a Run checks action. Findings show the employee, component, compared amounts and reason for review, e.g. a salary increase without a linked amendment.',
+      tags: ['Run checks', 'Findings', 'Not checked label'] },
+    { id: 'ai-03-risk-report', name: 'Risk report', file: 'ai-03-risk-report.html',
+      desc: 'AI-drafted period summary separating confirmed mismatches, unusual changes and checks not completed, with suggested next steps.',
+      tags: ['AI draft', 'Unresolved findings', 'Next steps'] }
+  ]}
+];
+const all = STORIES.flatMap(g => g.items);
+const nav = document.getElementById('nav');
+STORIES.forEach(g => {
+  const div = document.createElement('div'); div.className = 'group';
+  const h = document.createElement('h2'); h.textContent = g.group; div.appendChild(h);
+  g.items.forEach(s => { const a = document.createElement('a'); a.href = '#' + s.id; a.textContent = s.name; a.dataset.id = s.id; div.appendChild(a); });
+  nav.appendChild(div);
+});
+function show() {
+  const id = location.hash.slice(1);
+  const s = all.find(x => x.id === id) || all[0];
+  document.getElementById('title').textContent = s.name;
+  document.getElementById('desc').textContent = s.desc;
+  document.getElementById('chips').innerHTML = '';
+  s.tags.forEach(t => { const c = document.createElement('span'); c.className = 'chip'; c.textContent = t; document.getElementById('chips').appendChild(c); });
+  document.getElementById('view').src = s.file;
+  document.getElementById('open').href = s.file;
+  document.querySelectorAll('#nav a').forEach(a => a.toggleAttribute('aria-current', false));
+  const cur = document.querySelector('#nav a[data-id="' + s.id + '"]'); if (cur) cur.setAttribute('aria-current', 'page');
+  document.title = s.name + ' · Sommet360 AI Storybook';
+}
+window.addEventListener('hashchange', show);
+show();
+</script>
+</body>
+</html>

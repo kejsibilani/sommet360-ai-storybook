@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-03 Payroll runs with AI checks · Sommet360 AI mock-up</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:Inter, Arial, sans-serif;color:#1A1A1A;background:#FFFFFF;font-size:14px}
+a{color:#0F64D5}a:hover{color:#0B4FAE}
+button{font-family:inherit}
+th{font-weight:400;color:#6B7281;font-size:12px;text-align:left;padding:10px 10px;background:#F6F8FA}
+td{font-size:13px;padding:12px 10px;border-bottom:1px solid #EEF0F3;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/x-template" id="tpl">
+<div style="position: relative; display: flex; flex-wrap: wrap; min-height: 900px; background: #FFFFFF">
+  <nav aria-label="Main" style="flex: 0 0 60px; background: #F6F8FA; border-radius: 12px; margin: 24px 0 40px 24px; display: flex; flex-direction: column; align-items: center; gap: 26px; padding: 14px 0">
+    <span style="width: 44px; height: 44px; border-radius: 10px; background: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="30" height="24" viewBox="0 0 34 28" fill="none" stroke="#1A1A1A" stroke-width="1.5" role="img" aria-label="Sommet360"><path d="M1 26 L11 8 L17 18 L23 6 L33 26"/><path d="M7 26 L14 14 L20 26"/></svg></span>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5" role="img" aria-label="Home"><path d="M3 11 L12 3 L21 11 V21 H3 Z"/></svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5" role="img" aria-label="Menu"><path d="M3 6 H21 M3 12 H21 M3 18 H21"/></svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5" role="img" aria-label="Notifications"><path d="M6 17 V11 a6 6 0 0 1 12 0 V17 L20 19 H4 Z M10 21 h4"/></svg>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="1.5" role="img" aria-label="Search"><circle cx="11" cy="11" r="7"/><path d="M16 16 L21 21"/></svg>
+  </nav>
+  <main style="flex: 999 1 560px; min-width: 0; padding: 20px 24px 48px 26px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+      <h1 style="margin: 0; font-size: 28px; font-weight: 400">Payroll runs</h1>
+      <div style="display: flex; align-items: center; gap: 18px; background: #F6F8FA; border-radius: 12px; padding: 12px 16px">
+        <span style="width: 34px; height: 34px; border-radius: 50%; background: #1A1A1A; display: inline-block"></span>
+        <span style="text-decoration: underline">PLAY HERENS</span>
+        <span style="width: 36px; height: 36px; border-radius: 50%; background: #0F64D5; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 12px">K B</span>
+        <span style="text-decoration: underline">Kejsi Bilani</span>
+        <span style="text-decoration: underline">EN ▾</span>
+      </div>
+    </div>
+    <div style="display: flex; gap: 32px; color: #6B7281; flex-wrap: wrap"><span style="color: #0F64D5; border-bottom: 2px solid #0F64D5; padding-bottom: 6px">View list mode</span><span>View calendar mode</span><span>View timeline mode</span><span>Settings</span></div>
+    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap">
+      <span style="width: 36px; height: 36px; background: #0F64D5; color: #FFFFFF; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px">+</span>
+      <span style="background: #F6F8FA; border-radius: 8px; padding: 8px 12px; color: #6B7281; font-size: 12px">Legal entity <span style="color: #1A1A1A; margin-left: 8px; font-size: 14px">HVIEW ES</span> ▾</span>
+      <span style="background: #F6F8FA; border-radius: 8px; padding: 8px 12px; color: #6B7281; font-size: 12px">Period <span style="color: #1A1A1A; margin-left: 8px; font-size: 14px">Current month</span> ▾</span>
+      <span style="font-size: 13px; color: #1A1A1A">◯ Editable runs only</span>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse">
+      <thead><tr><th>Run</th><th>Period</th><th>Employees</th><th>Status</th><th>Calculated</th><th style="color: #5B3FD6">✦ AI checks</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>October 2026 · Monthly</td><td>01/10/2026 – 31/10/2026</td><td>14</td>
+          <td><span style="background: #EFF6FF; border: 1.5px solid #B4D4FF; color: #0F64D5; border-radius: 12px; padding: 2px 8px; font-size: 12px; font-weight: 700">Calculated</span></td>
+          <td>22 Oct 2026</td>
+          <td>
+            <sc-if value="{{ notRun }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ run }}" style="border: 0; background: #0F64D5; color: #FFFFFF; border-radius: 5px; padding: 5px 14px; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.2); cursor: pointer">Run checks</button>
+            </sc-if>
+            <sc-if value="{{ running }}" hint-placeholder-val="{{ false }}">
+              <span style="display: inline-flex; align-items: center; gap: 8px; color: #5B3FD6; font-size: 13px"><span style="width: 13px; height: 13px; border: 2px solid #D9CFFF; border-top-color: #5B3FD6; border-radius: 50%; animation: spin 0.9s linear infinite"></span>Checking 14 employees…</span>
+            </sc-if>
+            <sc-if value="{{ done }}" hint-placeholder-val="{{ true }}">
+              <span style="display: inline-flex; gap: 6px; align-items: center"><span style="font-size: 11.5px; font-weight: 600; background: #FEF3F2; border: 1px solid #FDA29B; color: #B42318; border-radius: 12px; padding: 2px 8px">2 mismatches</span><span style="font-size: 11.5px; font-weight: 600; background: #FFFAEB; border: 1px solid #FEC84B; color: #93370D; border-radius: 12px; padding: 2px 8px">2 to review</span></span>
+            </sc-if>
+          </td>
+        </tr>
+        <tr><td style="color: #6B7281">September 2026 · Monthly</td><td style="color: #6B7281">01/09/2026 – 30/09/2026</td><td style="color: #6B7281">13</td><td><span style="background: #DDF5E3; color: #2E7D32; border-radius: 12px; padding: 2px 8px; font-size: 12px; font-weight: 700">Closed</span></td><td style="color: #6B7281">23 Sep 2026</td><td style="font-size: 12px; color: #1E7B45">0 open findings</td></tr>
+      </tbody>
+    </table>
+
+    <sc-if value="{{ done }}" hint-placeholder-val="{{ true }}">
+      <section aria-label="AI check results" style="background: #F6F8FA; border: 1.5px solid #D9CFFF; border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B3FD6" stroke-width="2" aria-hidden="true"><path d="M12 3 L13.8 9.2 L20 11 L13.8 12.8 L12 19 L10.2 12.8 L4 11 L10.2 9.2 Z"/></svg>
+          <span style="color: #0F64D5">AI checks · October 2026 · compared with September 2026 and approved inputs</span>
+          <span style="flex: 1"></span>
+          <button type="button" onClick="{{ run }}" style="border: 0; background: #E6F0FF; color: #0F64D5; border-radius: 5px; padding: 5px 14px; font-weight: 500; cursor: pointer">Rerun checks</button>
+          <a href="ai-03-risk-report.html" style="background: #0F64D5; color: #FFFFFF; text-decoration: none; border-radius: 5px; padding: 5px 14px; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.2)">Generate risk report</a>
+        </div>
+        <div style="display: flex; gap: 28px; flex-wrap: wrap">
+          <div style="text-align: center"><div style="font-size: 12px; color: #6B7281"><span style="color: #D92D20">●</span> Confirmed mismatches</div><div style="font-size: 24px">2</div></div>
+          <div style="text-align: center"><div style="font-size: 12px; color: #6B7281"><span style="color: #F79009">●</span> Unusual changes</div><div style="font-size: 24px">2</div></div>
+          <div style="text-align: center"><div style="font-size: 12px; color: #6B7281"><span style="color: #98A2B3">●</span> Not checked</div><div style="font-size: 24px">1</div></div>
+          <div style="text-align: center"><div style="font-size: 12px; color: #6B7281"><span style="color: #12B76A">●</span> Changes explained</div><div style="font-size: 24px">3</div><div style="font-size: 11px; color: #6B7281">1 joiner, 1 leaver, 1 approved bonus</div></div>
+        </div>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-start">
+          <div style="flex: 999 1 560px; min-width: 0; overflow-x: auto; background: #FFFFFF; border-radius: 12px">
+            <table style="width: 100%; border-collapse: collapse; min-width: 620px">
+              <thead><tr><th>Finding</th><th>Employee</th><th>Component</th><th>Compared amounts</th><th><span style="position: absolute; left: -9999px">Open</span></th></tr></thead>
+              <tbody>
+                <sc-for list="{{ rows }}" as="r" hint-placeholder-count="5">
+                  <tr style="{{ r.rowStyle }}">
+                    <td><span style="{{ r.badge }}">{{ r.kind }}</span></td>
+                    <td>{{ r.emp }}</td><td>{{ r.comp }}</td><td>{{ r.vals }}</td>
+                    <td><button type="button" onClick="{{ r.pick }}" style="border: 0; background: #E6F0FF; color: #0F64D5; border-radius: 5px; padding: 3px 10px; font-size: 12px; font-weight: 500; cursor: pointer">Details</button></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <aside aria-label="Finding detail" style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+            <span style="{{ sel.badge }}; align-self: flex-start">{{ sel.kind }}</span>
+            <div style="font-size: 16px; font-weight: 500">{{ sel.title }}</div>
+            <div style="font-size: 13px; color: #6B7281">{{ sel.emp }} · {{ sel.comp }}</div>
+            <div style="display: flex; gap: 8px">
+              <div style="flex: 1; background: #F6F8FA; border-radius: 8px; padding: 8px 10px"><div style="font-size: 11px; color: #6B7281">{{ sel.aLabel }}</div><div style="font-weight: 600">{{ sel.a }}</div></div>
+              <div style="flex: 1; background: #F6F8FA; border-radius: 8px; padding: 8px 10px"><div style="font-size: 11px; color: #6B7281">{{ sel.bLabel }}</div><div style="font-weight: 600">{{ sel.b }}</div></div>
+            </div>
+            <div style="font-size: 13px; line-height: 1.5"><b style="color: #5B3FD6">Reason for review.</b> {{ sel.why }}</div>
+            <div style="font-size: 13px; line-height: 1.5"><b>Suggested next step:</b> {{ sel.next }}</div>
+            <div style="font-size: 12px; color: #6B7281">AI does not change pay or release payments.</div>
+          </aside>
+        </div>
+      </section>
+    </sc-if>
+    <p style="margin: 0; font-size: 12px; color: #6B7281">Original Payroll runs list with demo data; new AI elements: the AI checks column and results panel. Click Run checks to start.</p>
+  </main>
+  <div style="position: absolute; left: 22px; bottom: 10px; font-size: 12px; color: #6B7281">Powered by <b style="font-weight: 500; color: #1A1A1A">Sommet Global</b> | Data Privacy Policy | Terms of Service</div>
+</div>
+</script>
+<script src="assets/dc-lite.js"></script>
+<script>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { step: 0, sel: 2 }; }
+  renderVals() {
+    const red = 'font-size: 11.5px; font-weight: 600; background: #FEF3F2; border: 1px solid #FDA29B; color: #B42318; border-radius: 12px; padding: 2px 8px; white-space: nowrap';
+    const amber = 'font-size: 11.5px; font-weight: 600; background: #FFFAEB; border: 1px solid #FEC84B; color: #93370D; border-radius: 12px; padding: 2px 8px; white-space: nowrap';
+    const grey = 'font-size: 11.5px; font-weight: 600; background: #F2F4F7; border: 1px solid #D0D5DD; color: #344054; border-radius: 12px; padding: 2px 8px; white-space: nowrap';
+    const data = [
+      { kind: 'Mismatch', badge: red, emp: 'Alexa Doe', comp: 'Overtime', vals: 'Input 6.0 h · paid 0.00', title: 'Approved overtime not in calculated pay',
+        aLabel: 'Approved input', a: '6.0 h · 142.80 EUR', bLabel: 'Calculated overtime', b: '0.00 EUR',
+        why: 'An approved payroll input for 6 hours of overtime exists for October, but no overtime amount appears in the calculated salary.',
+        next: 'Check the input is linked to this run, then recalculate.' },
+      { kind: 'Mismatch', badge: red, emp: 'Daniel Ortega', comp: 'Employee list', vals: '2 lines · same tax ID', title: 'Employee appears twice in the run',
+        aLabel: 'Lines in this run', a: '2', bLabel: 'Expected', b: '1',
+        why: 'Two payroll lines share the same tax ID and contract, so net pay would be paid twice.',
+        next: 'Remove the duplicate line and recalculate.' },
+      { kind: 'Unusual', badge: amber, emp: 'Sara Lindqvist', comp: 'Base salary', vals: '2,400.00 → 2,760.00 (+15%)', title: 'Salary increase without a linked amendment',
+        aLabel: 'September base salary', a: '2,400.00 EUR', bLabel: 'October base salary', b: '2,760.00 EUR',
+        why: 'Base salary rose 15% from 1 Oct, but no signed amendment with that effective date is linked. Missing evidence does not prove the payment is wrong.',
+        next: 'Link the signed amendment, or confirm the raise with HR before release.' },
+      { kind: 'Unusual', badge: amber, emp: 'Ana Ruiz', comp: 'Net pay', vals: '1,980.00 → 1,226.00 (−38%)', title: 'Large drop in net pay',
+        aLabel: 'September net', a: '1,980.00 EUR', bLabel: 'October net', b: '1,226.00 EUR',
+        why: 'Net pay fell 38%. No leave, leaver date, partial period or approved deduction explains it.',
+        next: 'Review the deductions applied this month.' },
+      { kind: 'Not checked', badge: grey, emp: 'All employees', comp: 'Income tax withholding', vals: 'No approved rule', title: 'Tax withholding not checked',
+        aLabel: 'Rule pack', a: 'Spain · not approved', bLabel: 'Employees', b: '14',
+        why: 'Country tax and contribution checks run only where independently validated rules exist. There is no approved rule for Spanish withholding yet.',
+        next: 'Payroll expert to validate the Spain rule pack.' }
+    ];
+    const step = this.state.step, i = this.state.sel;
+    return {
+      notRun: step === 0, running: step === 1, done: step === 2,
+      run: () => { this.setState({ step: 1 }); setTimeout(() => this.setState({ step: 2 }), 1800); },
+      rows: data.map((r, k) => ({ ...r, rowStyle: k === i ? 'background: #F5F9FF' : '', pick: () => this.setState({ sel: k }) })),
+      sel: data[i]
+    };
+  }
+}
+dcMount('#app', '#tpl', Component);
+</script>
+</body>
+</html>

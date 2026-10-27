@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-03 Payroll risk report · Sommet360 AI mock-up</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:Inter, Arial, sans-serif;color:#1A1A1A;background:#FFFFFF;font-size:14px}
+a{color:#0F64D5}a:hover{color:#0B4FAE}
+button{font-family:inherit}
+th{font-weight:400;color:#6B7281;font-size:12px;text-align:left;padding:9px 10px;background:#F6F8FA}
+td{font-size:13px;padding:10px;border-bottom:1px solid #EEF0F3;vertical-align:top}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/x-template" id="tpl">
+<div style="position: relative; min-height: 900px; background: #7A7A7A; display: flex; justify-content: center; align-items: flex-start; padding: 40px 24px; box-sizing: border-box">
+  <section aria-label="Payroll risk report" style="width: 100%; max-width: 1100px; background: #FFFFFF; border-radius: 12px; box-shadow: 0 11px 15px -7px rgba(0,0,0,0.2), 0 24px 38px 3px rgba(0,0,0,0.14); display: flex; flex-direction: column">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 20px 6px">
+      <h2 style="margin: 0; font-size: 16px; font-weight: 500">Payroll risk report · HVIEW ES · October 2026</h2>
+      <span style="color: #D92D20; font-size: 18px">×</span>
+    </div>
+    <div style="padding: 6px 20px 0; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12px; color: #6B7281">
+        <span style="display: inline-flex; align-items: center; gap: 4px; background: #F1EDFF; color: #5B3FD6; border-radius: 12px; padding: 2px 8px; font-weight: 600"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#5B3FD6" stroke-width="2.2" aria-hidden="true"><path d="M12 3 L13.8 9.2 L20 11 L13.8 12.8 L12 19 L10.2 12.8 L4 11 L10.2 9.2 Z"/></svg>Drafted by AI</span>
+        Based on checks run 27 Oct 2026 14:05 · 14 employees · review before sharing
+      </div>
+
+      <div style="background: #F6F8FA; border-radius: 12px; padding: 14px 16px; font-size: 14px; line-height: 1.6">
+        <b>Summary.</b> The October run is <b>not ready for release</b>. Two confirmed mismatches would change pay: approved overtime missing for one employee and one employee paid twice. Two unusual changes need evidence or an explanation. Spanish tax withholding could not be checked because no approved rule exists yet. Three other changes from September are explained by a joiner, a leaver and an approved bonus.
+      </div>
+
+      <div style="display: flex; gap: 28px; flex-wrap: wrap">
+        <div style="text-align: center"><div style="font-size: 12px; color: #6B7281"><span style="color: #D92D20">●</span> Confirmed mismatches</div><div style="font-size: 24px">2</div></div>
+        <div style="text-align: center"><div style="font-size: 12px; color: #6B7281"><span style="color: #F79009">●</span> Unusual changes</div><div style="font-size: 24px">2</div></div>
+        <div style="text-align: center"><div style="font-size: 12px; color: #6B7281"><span style="color: #98A2B3">●</span> Checks not completed</div><div style="font-size: 24px">1</div></div>
+        <div style="text-align: center"><div style="font-size: 12px; color: #6B7281">Net pay at risk</div><div style="font-size: 24px">2,016.80 EUR</div></div>
+      </div>
+
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; min-width: 760px">
+          <thead><tr><th>Type</th><th>Employee</th><th>Component</th><th>Difference</th><th>Reason for review</th><th>Next step</th></tr></thead>
+          <tbody>
+            <tr><td><span style="font-size: 11.5px; font-weight: 600; background: #FEF3F2; border: 1px solid #FDA29B; color: #B42318; border-radius: 12px; padding: 2px 8px">Mismatch</span></td><td>Alexa Doe</td><td>Overtime</td><td>−142.80 EUR</td><td>Approved 6 h input not in calculated pay</td><td>Link input, recalculate</td></tr>
+            <tr><td><span style="font-size: 11.5px; font-weight: 600; background: #FEF3F2; border: 1px solid #FDA29B; color: #B42318; border-radius: 12px; padding: 2px 8px">Mismatch</span></td><td>Daniel Ortega</td><td>Employee list</td><td>+1,874.00 EUR</td><td>Two lines with the same tax ID</td><td>Remove duplicate line</td></tr>
+            <tr><td><span style="font-size: 11.5px; font-weight: 600; background: #FFFAEB; border: 1px solid #FEC84B; color: #93370D; border-radius: 12px; padding: 2px 8px">Unusual</span></td><td>Sara Lindqvist</td><td>Base salary</td><td>+360.00 EUR (+15%)</td><td>No signed amendment linked for 1 Oct</td><td>Link amendment or confirm with HR</td></tr>
+            <tr><td><span style="font-size: 11.5px; font-weight: 600; background: #FFFAEB; border: 1px solid #FEC84B; color: #93370D; border-radius: 12px; padding: 2px 8px">Unusual</span></td><td>Ana Ruiz</td><td>Net pay</td><td>−754.00 EUR (−38%)</td><td>No leave, leaver date or approved deduction</td><td>Review deductions</td></tr>
+            <tr><td><span style="font-size: 11.5px; font-weight: 600; background: #F2F4F7; border: 1px solid #D0D5DD; color: #344054; border-radius: 12px; padding: 2px 8px">Not checked</span></td><td>All</td><td>Income tax withholding</td><td>–</td><td>No approved Spain rule pack</td><td>Payroll expert to validate rules</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size: 12px; color: #6B7281">Net pay at risk counts confirmed mismatches only. Unusual changes may be correct once evidence is linked. After corrections, recalculate, rerun checks and regenerate this report.</div>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; flex-wrap: wrap; gap: 10px">
+      <a href="ai-03-payroll-checks.html" style="border: 1px solid #BF40BF; color: #BF40BF; text-decoration: none; border-radius: 5px; padding: 5px 15px; font-weight: 500; text-transform: uppercase">Go back</a>
+      <span style="display: flex; gap: 10px">
+        <button type="button" style="border: 0; background: #E6F0FF; color: #0F64D5; border-radius: 5px; padding: 6px 16px; font-weight: 500; cursor: pointer">Edit draft</button>
+        <button type="button" style="border: 0; background: #0F64D5; color: #FFFFFF; border-radius: 5px; padding: 6px 16px; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.2); cursor: pointer">Download PDF</button>
+      </span>
+    </div>
+  </section>
+  <div style="position: absolute; left: 22px; bottom: 10px; font-size: 12px; color: #FFFFFF">Mock-up with demo data, in the platform's dialog style.</div>
+</div>
+</script>
+<script src="assets/dc-lite.js"></script>
+<script>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+dcMount('#app', '#tpl', Component);
+</script>
+</body>
+</html>

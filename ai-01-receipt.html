@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI-01 Add travel expense with AI-filled receipt · Sommet360 AI mock-up</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:Inter, Arial, sans-serif;color:#1A1A1A;background:#FFFFFF;font-size:14px}
+a{color:#0F64D5}a:hover{color:#0B4FAE}
+button{font-family:inherit}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/x-template" id="tpl">
+<div style="position: relative; min-height: 900px; background: #7A7A7A; display: flex; align-items: flex-start; justify-content: center; padding: 50px 24px 40px; box-sizing: border-box">
+  <section aria-label="Add travel expense" style="width: 100%; max-width: 1310px; background: #FFFFFF; border-radius: 12px; box-shadow: 0 11px 15px -7px rgba(0,0,0,0.2), 0 24px 38px 3px rgba(0,0,0,0.14); display: flex; flex-direction: column">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 20px 10px">
+      <h2 style="margin: 0; font-size: 16px; font-weight: 500">Add travel expense</h2>
+      <span style="color: #D92D20; font-size: 18px">×</span>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; padding: 0 20px">
+      <div style="flex: 0 1 364px; min-width: 0; background: #F6F8FA; border-radius: 4px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+          <span style="background: #0F64D5; color: #FFFFFF; border-radius: 5px; padding: 4px 8px; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.2)">Add receipt document</span>
+          <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #5B3FD6"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#5B3FD6" stroke-width="2.2" aria-hidden="true"><path d="M12 3 L13.8 9.2 L20 11 L13.8 12.8 L12 19 L10.2 12.8 L4 11 L10.2 9.2 Z"/></svg>Read by AI</span>
+        </div>
+
+        <sc-if value="{{ showDup }}" hint-placeholder-val="{{ true }}">
+          <div role="alert" style="background: #FFFAEB; border: 1px solid #FEC84B; border-radius: 12px; padding: 10px 12px; font-size: 12.5px; color: #93370D; display: flex; flex-direction: column; gap: 8px">
+            <span><b>Possible duplicate receipt.</b> Cabify, 14 Oct 2026, 38.60 EUR is already in your report "Madrid workshop – September draft".</span>
+            <span style="display: flex; gap: 8px; flex-wrap: wrap">
+              <button type="button" onClick="{{ keepDup }}" style="border: 1px solid #93370D; background: #FFFFFF; color: #93370D; border-radius: 5px; padding: 3px 10px; font-size: 12px; font-weight: 500; cursor: pointer">Different trip, keep</button>
+              <button type="button" onClick="{{ keepDup }}" style="border: 0; background: #93370D; color: #FFFFFF; border-radius: 5px; padding: 3px 10px; font-size: 12px; font-weight: 500; cursor: pointer">Remove receipt</button>
+            </span>
+          </div>
+        </sc-if>
+
+        <div style="display: flex; align-items: center; gap: 10px">Date <span style="border: 1.5px solid #B9A8FF; color: #0F64D5; border-radius: 4px; padding: 6px 12px; background: #FFFFFF">2026 OCTOBER 14</span></div>
+
+        <sc-if value="{{ typeOpen }}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <fieldset style="margin: 0; border: 2px solid #F79009; border-radius: 12px; padding: 0 10px 10px; background: #FFFFFF">
+              <legend style="font-size: 11px; color: #93370D; padding: 0 4px">Type *</legend>
+              <div style="display: flex; justify-content: space-between">Taxi <span style="color: #6B7281">▾</span></div>
+            </fieldset>
+            <div style="font-size: 12px; color: #93370D; line-height: 1.45">Please confirm: "Cabify" can be Taxi or Car rental. No rental period on the receipt, so AI suggests Taxi.</div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap">
+              <button type="button" onClick="{{ confirmTaxi }}" style="border: 0; background: #0F64D5; color: #FFFFFF; border-radius: 5px; padding: 3px 10px; font-size: 12px; font-weight: 500; cursor: pointer">Confirm Taxi</button>
+              <button type="button" onClick="{{ pickRental }}" style="border: 0; background: #E6F0FF; color: #0F64D5; border-radius: 5px; padding: 3px 10px; font-size: 12px; font-weight: 500; cursor: pointer">Car rental</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ typeDone }}" hint-placeholder-val="{{ false }}">
+          <fieldset style="margin: 0; border: 1px solid rgba(0,0,0,0.23); border-radius: 12px; padding: 0 10px 10px; background: #FFFFFF">
+            <legend style="font-size: 11px; color: #8E8E93; padding: 0 4px">Type *</legend>
+            <div style="display: flex; justify-content: space-between">{{ typeValue }} <span style="color: #6B7281">▾</span></div>
+          </fieldset>
+        </sc-if>
+
+        <fieldset style="margin: 0; border: 1.5px solid #B9A8FF; border-radius: 12px; padding: 0 10px 10px; background: #FFFFFF">
+          <legend style="font-size: 11px; color: #5B3FD6; padding: 0 4px">Description *</legend>
+          <div>Cabify ride, Madrid Atocha to client office</div>
+        </fieldset>
+        <fieldset style="margin: 0; border: 1.5px solid #B9A8FF; border-radius: 12px; padding: 0 10px 10px; background: #FFFFFF">
+          <legend style="font-size: 11px; color: #5B3FD6; padding: 0 4px">Country *</legend>
+          <div style="display: flex; justify-content: space-between">Spain <span style="color: #6B7281">▾</span></div>
+        </fieldset>
+        <fieldset style="margin: 0; border: 1.5px solid #B9A8FF; border-radius: 12px; padding: 0 10px 8px; background: #FFFFFF">
+          <legend style="font-size: 11px; color: #5B3FD6; padding: 0 4px">Amount *</legend>
+          <div style="display: flex; justify-content: space-between; align-items: center">38.60 <span style="border: 1.5px solid #B9A8FF; border-radius: 8px; padding: 2px 8px">EUR ▾</span></div>
+        </fieldset>
+        <fieldset style="margin: 0; border: 1px solid rgba(0,0,0,0.23); border-radius: 12px; padding: 0 10px 10px; background: #FFFFFF">
+          <legend style="font-size: 11px; color: #8E8E93; padding: 0 4px">Exchange rate</legend>
+          <div style="display: flex; justify-content: space-between">1 <span style="width: 14px; height: 14px; border-radius: 50%; background: #6B7281; color: #FFFFFF; font-size: 10px; display: flex; align-items: center; justify-content: center">i</span></div>
+        </fieldset>
+        <fieldset style="margin: 0; border: 1px solid rgba(0,0,0,0.23); border-radius: 12px; padding: 0 10px 8px; background: #FFFFFF">
+          <legend style="font-size: 11px; color: #8E8E93; padding: 0 4px">Converted amount</legend>
+          <div style="display: flex; justify-content: space-between; align-items: center">38.60 <span style="border: 1px solid rgba(0,0,0,0.23); border-radius: 8px; padding: 2px 8px; color: #6B7281">EUR</span></div>
+        </fieldset>
+        <div style="font-size: 11.5px; color: #6B7281; line-height: 1.5"><span style="color: #5B3FD6">Purple</span> = filled by AI, editable · <span style="color: #93370D">Orange</span> = please confirm · grey = existing conversion</div>
+      </div>
+
+      <figure aria-label="Receipt preview" style="flex: 999 1 420px; min-width: 0; margin: 0; background: #F6F8FA; border-radius: 4px; display: flex; align-items: center; justify-content: center; padding: 24px; min-height: 590px">
+        <div style="width: 300px; background: #FFFFFF; box-shadow: 0 2px 10px rgba(0,0,0,0.15); padding: 24px 22px; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 2px">
+          <div style="text-align: center; font-weight: 700; font-size: 16px">CABIFY</div>
+          <div style="text-align: center">Maxi Mobility Spain S.L.</div>
+          <div style="border-top: 1px dashed #999; margin: 8px 0"></div>
+          <div style="outline: 1.5px solid #B9A8FF; outline-offset: 1px">14/10/2026 08:42</div>
+          <div style="outline: 1.5px solid #B9A8FF; outline-offset: 1px">Madrid Atocha → C/ Serrano 41</div>
+          <div>Distance 6.8 km</div>
+          <div style="border-top: 1px dashed #999; margin: 8px 0"></div>
+          <div style="display: flex; justify-content: space-between"><span>Base</span><span>35.09</span></div>
+          <div style="display: flex; justify-content: space-between"><span>IVA 10%</span><span>3.51</span></div>
+          <div style="display: flex; justify-content: space-between; font-weight: 700; outline: 1.5px solid #B9A8FF; outline-offset: 1px"><span>TOTAL EUR</span><span>38.60</span></div>
+          <div style="border-top: 1px dashed #999; margin: 8px 0"></div>
+          <div style="text-align: center; font-size: 11px">Gracias por viajar con nosotros</div>
+        </div>
+      </figure>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 20px">
+      <a href="ai-01-expense-report.html" style="border: 1px solid #BF40BF; color: #BF40BF; text-decoration: none; border-radius: 5px; padding: 5px 15px; font-weight: 500">Cancel</a>
+      <button type="button" onClick="{{ reset }}" style="{{ confirmStyle }}">Confirm</button>
+    </div>
+  </section>
+  <div style="position: absolute; left: 22px; bottom: 10px; font-size: 12px; color: #FFFFFF">Original Add travel expense dialog with demo data; Confirm resets the demo.</div>
+</div>
+</script>
+<script src="assets/dc-lite.js"></script>
+<script>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { type: null, dup: true }; }
+  renderVals() {
+    const t = this.state.type;
+    const ready = t !== null && !this.state.dup;
+    return {
+      showDup: this.state.dup,
+      typeOpen: t === null, typeDone: t !== null, typeValue: t || '',
+      confirmTaxi: () => this.setState({ type: 'Taxi' }),
+      pickRental: () => this.setState({ type: 'Car rental' }),
+      keepDup: () => this.setState({ dup: false }),
+      confirmStyle: 'border: 0; border-radius: 5px; padding: 6px 16px; font-size: 14px; font-weight: 500; cursor: pointer; ' + (ready ? 'background: #0F64D5; color: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.2)' : 'background: rgba(0,0,0,0.12); color: rgba(0,0,0,0.26)'),
+      reset: () => this.setState({ type: null, dup: true })
+    };
+  }
+}
+dcMount('#app', '#tpl', Component);
+</script>
+</body>
+</html>
